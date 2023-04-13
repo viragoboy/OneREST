@@ -11,7 +11,7 @@ namespace OneREST.Services {
         {
         }
 
-        public List<PhoneContact> GetAll ()
+        public List<PhoneContact> getAll ()
         {
             List<PhoneContact> contacts = new List<PhoneContact> ();
 
@@ -37,7 +37,7 @@ namespace OneREST.Services {
             return contacts;
         }
 
-        public PhoneContact GetName (string name)
+        public PhoneContact getName (string name)
         {
             using (var conn = new NpgsqlConnection (connectionString)) {
                 conn.Open ();
@@ -54,7 +54,7 @@ namespace OneREST.Services {
             }
         }
 
-        public PhoneContact CreateContact (PhoneContact phoneContact)
+        public PhoneContact createContact (PhoneContact phoneContact)
         {
             using (var conn = new NpgsqlConnection (connectionString)) {
                 conn.Open ();
@@ -62,7 +62,21 @@ namespace OneREST.Services {
                     cmd.Parameters.AddWithValue ("@name", phoneContact.name);
                     cmd.Parameters.AddWithValue ("@phone", phoneContact.phone);
                     var reader = cmd.ExecuteNonQuery ();
-                    return null;
+                    return getName(phoneContact.name);
+                }
+            }
+        }
+
+        public PhoneContact deleteContact (string name)
+        {
+            using (var conn = new NpgsqlConnection (connectionString)) {
+                conn.Open ();
+
+                using (var cmd = new NpgsqlCommand ("DELETE FROM contactsdotnet WHERE name = @name", conn)) {
+                    cmd.Parameters.AddWithValue ("@name", name);
+                    PhoneContact deletedContact = this.getName (name);
+                    var reader = cmd.ExecuteNonQuery ();
+                    return deletedContact;
                 }
             }
         }

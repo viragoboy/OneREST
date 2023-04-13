@@ -14,24 +14,31 @@ public class Contacts : ControllerBase {
     }
 
     [HttpGet]
-    public List<PhoneContact> GetAll ()
+    public List<PhoneContact> getAll ()
     {
         ContactsService cs = new ContactsService ();
-        return cs.GetAll ();
+        return cs.getAll ();
     }
 
     [HttpGet ("{name}")]
-    public PhoneContact GetName (string name)
+    public PhoneContact getName (string name)
     {
         ContactsService cs = new ContactsService ();
-        return cs.GetName (name);
+        return cs.getName (name);
     }
 
     [HttpPost]
-    public PhoneContact CreateContact (PhoneContact phoneContact)
+    public PhoneContact createContact (PhoneContact phoneContact)
     {
         ContactsService cs = new ContactsService ();
-        return cs.CreateContact (phoneContact);
+        return cs.createContact (phoneContact);
+    }
+
+    [HttpDelete ("{name}")]
+    public PhoneContact deleteContact (string name)
+    {
+        ContactsService cs = new ContactsService ();
+        return cs.deleteContact (name);
     }
 
 }
