@@ -34,6 +34,13 @@ public class Contacts : ControllerBase {
         return cs.createContact (phoneContact);
     }
 
+    [HttpPut]
+    public PhoneContact updateContact (PhoneContact phoneContact)
+    {
+        ContactsService cs = new ContactsService ();
+        return cs.updateContact (phoneContact);
+    }
+
     [HttpDelete ("{name}")]
     public PhoneContact deleteContact (string name)
     {

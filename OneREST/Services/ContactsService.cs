@@ -67,6 +67,19 @@ namespace OneREST.Services {
             }
         }
 
+        public PhoneContact updateContact (PhoneContact phoneContact)
+        {
+            using (var conn = new NpgsqlConnection (connectionString)) {
+                conn.Open ();
+                using (var cmd = new NpgsqlCommand ("UPDATE contactsdotnet SET name = @name, phone = @phone WHERE name = @name", conn)) {
+                    cmd.Parameters.AddWithValue ("@name", phoneContact.name);
+                    cmd.Parameters.AddWithValue ("@phone", phoneContact.phone);
+                    var reader = cmd.ExecuteNonQuery ();
+                    return getName (phoneContact.name);
+                }
+            }
+        }
+
         public PhoneContact deleteContact (string name)
         {
             using (var conn = new NpgsqlConnection (connectionString)) {
